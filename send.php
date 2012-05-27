@@ -1,3 +1,20 @@
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Dynamic Version by: Nannette Thacker -->
+<!-- http://www.shiningstar.net -->
+<!-- Original by :  Ronnie T. Moore -->
+<!-- Web Site:  The JavaScript Source -->
+<!-- Use one function for multiple text areas on a page -->
+<!-- Limit the number of characters per textarea -->
+<!-- Begin
+function textCounter(field,cntfield,maxlimit) {
+if (field.value.length > maxlimit) // if too long...trim it!
+field.value = field.value.substring(0, maxlimit);
+// otherwise, update 'characters left' counter
+else
+cntfield.value = maxlimit - field.value.length;
+}
+//  End -->
+</script>
 <style type="text/css">
 .body {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -5,56 +22,40 @@
 }
 </style>
 
-<?php require_once("sms.php");
-//Database setup, add your details below
-$host = "localhost";
-$user = "DBuser";
-$pass = "dbpass";
-$db = "dbname";
-//Store the DB connection.
-$con = mysql_connect($host,$user,$pass);
-	mysql_select_db($db) or die ("Unable to select DB!"); 
 
-try {
-    // Instantiate a new Twilio Rest Client
-    $client = new Services_Twilio($AccountSid, $AuthToken);
-	
-	// Your Twilio Number
-    $from = "442033222595"; 
-	
-	// World code for your region
-	$world = "44"; 
-	
-	//capture the number
-    $to =  $_POST["number"]; 
-	
-	//trim the 0 from start of UK numbers
-	$finalnum =  ltrim ($to, "0");
-	
-	//Capture message body from form and add our FREE boilerplate
-    $message = $_POST["mess"]." Sent4Free: http://fmly.me/goGIbt";
 
-    // Send a new outgoing SMS
-    $response = $client->account->sms_messages->create($from, $world.$finalnum, $message);
-	
-//Call the DB
-$sql="INSERT INTO smsout (world,number,mess)
-VALUES
-('$world','$finalnum','$message')";
+<table class ="body" width="400" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+  <tr>
+    <form action="send.php" method="post" name="form1" id="form1">
+      <td width="341"><table width="100%" border="0" cellpadding="3" cellspacing="1" bgcolor="#FFFFFF">
+        <tr>
+          <td colspan="3" class ="body">SMS sending tool, remove the 0 from the front of the number before sending! Example "77712345"</td>
+        </tr>
+        <tr>
+          <td width="116" class ="body">Send SMS to:</td>
+          <td width="6">&nbsp;</td>
+          <td width="254"><input name="number" type="text" id="number" /></td>
+        </tr>
+        <tr>
+          <td height="52" valign="top" class ="body">Message to send</td>
+          <td valign="top">:</td>
+          <td><textarea name="mess" cols="30" rows="3" id="mess" wrap="physical" onKeyDown="textCounter(document.form1.mess,document.form1.remLen1,125)"
+onKeyUp="textCounter(document.form1.messa,document.form1.remLen1,125)"></textarea> <br/>
+            Remaining: 
+            <input readonly type="text" name="remLen1" size="3" maxlength="3" value="125"></td>
 
-//if Something goes wrong, tell us
-if (!mysql_query($sql,$con))
-  {
-  die('Error: ' . mysql_error());
-  }
-
-    // What's the status of the sent message.
-	echo '<div class="body">your Message is '.$response->status.' and will send in a few seconds';
-	//display number sent to
-	echo '</br>Number: '.$to;
-	//Display the message sent
-	echo '</br>Message sent: '.$message.'</div>';
-} catch (Exception $e) {
-	//something went wrong, what?
-    echo 'Caught exception: ' . $e->getMessage();
-} ?>
+        </tr>
+        
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><input type="submit" name="Submit" value="Send" /> 
+          <div class="body">
+            We will add a short message to the end of your tweet to support our work.<br />
+<strong>&quot;Sent4Free: <a href="http://fmly.me/goGIbt">http://fmly.me/goGIbt</a>&quot;</strong>
+</div></td>
+        </tr>
+      </table></td>
+    </form>
+  </tr>
+</table>
