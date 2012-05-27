@@ -12,9 +12,9 @@
 <?php 
 //DB setup
 $host = "localhost";
-$user = "metlock_sms";
-$pass = "ZGm5}(@w_&=6";
-$db = "metlock_sms";
+$user = "DBuser";
+$pass = "dbpass";
+$db = "dbname";
 
 //Store the DB connection.
 $con = mysql_connect($host,$user,$pass);
