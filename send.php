@@ -6,11 +6,11 @@
 </style>
 
 <?php require_once("sms.php");
-//DB setup
+//Database setup, add your details below
 $host = "localhost";
-$user = "metlock_ful324";
-$pass = "D_z5*Bs-c*Zk";
-$db = "metlock_fulsit34";
+$user = "DBuser";
+$pass = "dbpass";
+$db = "dbname";
 //Store the DB connection.
 $con = mysql_connect($host,$user,$pass);
 	mysql_select_db($db) or die ("Unable to select DB!"); 

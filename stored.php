@@ -10,7 +10,7 @@
 </style>
 
 <?php 
-//DB setup
+//Database setup, add your details below
 $host = "localhost";
 $user = "DBuser";
 $pass = "dbpass";
